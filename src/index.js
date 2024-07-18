@@ -1,18 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { SessionProvider } from './utils/SessionContext';
-import { CartProvider } from './utils/CartContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { SessionProvider } from "./utils/SessionContext";
+import { CartProvider } from "./utils/CartContext";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <SessionProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </SessionProvider>
+  <SessionProvider>
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </SessionProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
