@@ -112,7 +112,6 @@ const CheckoutPage = () => {
 
       if (orderId !== null) {
         const amountInPaise = Math.round(amt * 100); // Convert to paise
-
         const options = {
           key: "rzp_test_vTCR7JkBfoLIe0",
           amount: amountInPaise,

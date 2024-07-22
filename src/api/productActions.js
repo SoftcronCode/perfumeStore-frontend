@@ -18,16 +18,18 @@ import { API_URLS } from "./apiUrls";
 import { toast } from "react-toastify";
 // import { CartContext } from "../utils/CartContext";
 
-const UserID = localStorage.getItem("user_id");
-
 // 1. Add To Cart Function
+const UserID = localStorage.getItem("user_id");
 export const AddToCart = async (productId, variationId, qty) => {
+  const UserID = localStorage.getItem("user_id");
   const requestBody = {
     productId: productId,
     variationId: variationId,
     qty: qty || 1,
     userId: UserID,
   };
+
+  console.log("user id:", UserID);
 
   try {
     const response = await fetchData(API_URLS.addToCart, requestBody);

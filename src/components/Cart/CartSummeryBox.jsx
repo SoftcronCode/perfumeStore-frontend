@@ -9,10 +9,10 @@ const CartSummeryBox = ({ cartItems }) => {
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null); // State to hold discounted total
   const [message, setMessage] = useState(""); // State to hold response message
-  const [couponCode, setCouponCode] = useState("");
+  const [couponCode, setCouponCode] = useState("none");
 
-  const [discountAmount, setDiscountAmount] = useState(null);
-  const [discountType, setDiscountType] = useState(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [discountType, setDiscountType] = useState("none");
 
   const totalAmount = cartItems
     ? cartItems.reduce(

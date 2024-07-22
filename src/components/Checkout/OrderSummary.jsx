@@ -23,12 +23,13 @@ const OrderSummary = ({
   let subTotal = 0;
   let totalOrderWeight = 0;
   let gstAmount = 0;
+  let gstPercent;
 
   if (cartItems && cartItems.length > 0) {
     cartItems.forEach((data) => {
       const productTotal = data.product_price * data.cart_qty; // get product total amount.
       subTotal += productTotal; // get subtotal amount.
-      const gstPercent = data.product_gst; // get gst percentage.
+      gstPercent = data.product_gst; // get gst percentage.
       totalOrderWeight += data.shipping_weight * data.cart_qty; // get total order weight.
       gstAmount += (productTotal * gstPercent) / (100 + gstPercent); // get total gst amount.
     });
@@ -37,7 +38,8 @@ const OrderSummary = ({
   const shippingAmount = calculateShippingCharge(totalOrderWeight); // get total shipping amount.
   const remainingWeight =
     Math.ceil(totalOrderWeight / 1000) * 1000 - totalOrderWeight; // get remaining shipping weight.
-  const grandTotal = subTotal + shippingAmount;
+  const grandTotal = subTotal + shippingAmount + gstAmount;
+  // console.log("gstPercentage: ", gstPercent);
 
   const totalAfterDiscountNdCharges =
     parseFloat(shippingAmount.toFixed(2)) +
@@ -89,7 +91,9 @@ const OrderSummary = ({
             </li>
             <li>
               <h4>GST (Included)</h4>
-              <h4 className="price">₹ {gstAmount.toFixed(2)}</h4>
+              <h4 className="price">
+                ₹ {gstAmount.toFixed(2)} ({gstPercent}%)
+              </h4>
             </li>
             <li>
               <p>
@@ -102,25 +106,35 @@ const OrderSummary = ({
         </div>
         <ul className="summery-total">
           <li className="list-total border-top-0">
-            <h4>Total (Before Discount)</h4>
+            <h4>Total</h4>
             <h4 className="price">₹ {grandTotal.toFixed(2)}</h4>
           </li>
-          {totalAfterDiscount ? (
+          {!totalAfterDiscount ? (
             <li className="list-total border-top-0">
               <h4>Total (After Discount)</h4>
-              <h4 className="price theme-color">
-                ₹{" "}
+              <h4 className="ms-auto">
+                ₹
                 {(
                   parseFloat(totalAfterDiscount) +
                   parseFloat(shippingAmount) +
                   parseFloat(gstAmount)
                 ).toFixed(2)}
               </h4>
+
+              {/* <h4>Saved ₹{subTotal - totalAfterDiscount}</h4> */}
             </li>
           ) : (
-            "Happy Shopping"
+            ""
           )}
         </ul>
+        {!totalAfterDiscount ? (
+          <h4 className="ms-3">
+            Saved:{" "}
+            <span className="fw-bold">₹{subTotal - totalAfterDiscount}</span>
+          </h4>
+        ) : (
+          ""
+        )}
       </div>
       <div className="button-group checkout1-button">
         <ul>
@@ -133,9 +147,9 @@ const OrderSummary = ({
                   gstAmount.toFixed(2),
                   shippingAmount.toFixed(2),
                   totalAmountBeforeDiscount,
-                  discountAmount,
-                  discountType,
-                  couponCode
+                  discountAmount || 0,
+                  discountType || "none",
+                  couponCode || "none"
                 )
               }
             >
